@@ -45,8 +45,7 @@ const setRefreshTokenCookie = (res, token) => {
   res.cookie(getRefreshCookieName(), token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    maxAge: parseDurationToMs(process.env.JWT_REFRESH_EXPIRES_IN, 7 * 24 * 60 * 60 * 1000),
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',    maxAge: parseDurationToMs(process.env.JWT_REFRESH_EXPIRES_IN, 7 * 24 * 60 * 60 * 1000),
     path: '/api/auth',
   });
 };

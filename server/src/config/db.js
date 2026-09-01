@@ -1,4 +1,8 @@
 const mysql = require('mysql2/promise');
+const fs = require('fs');
+const path = require('path');
+
+const mysql = require('mysql2/promise');
 
 const { ensureSchema } = require('../db/schema');
 
@@ -18,6 +22,9 @@ const getBaseConfig = () => ({
   port: parsePort(process.env.MYSQL_PORT, 3306),
   user: process.env.MYSQL_USER || 'root',
   password: process.env.MYSQL_PASSWORD || '',
+  ...(process.env.MYSQL_USE_SSL === 'true' && {
+    ssl: { ca: fs.readFileSync(path.join(__dirname, '../certs/ca.pem')) },
+  }),
 });
 
 const getPoolConfig = () => ({
