@@ -2,7 +2,6 @@ const mysql = require('mysql2/promise');
 const fs = require('fs');
 const path = require('path');
 
-const mysql = require('mysql2/promise');
 
 const { ensureSchema } = require('../db/schema');
 
@@ -23,7 +22,7 @@ const getBaseConfig = () => ({
   user: process.env.MYSQL_USER || 'root',
   password: process.env.MYSQL_PASSWORD || '',
   ...(process.env.MYSQL_USE_SSL === 'true' && {
-    ssl: { ca: fs.readFileSync(path.join(__dirname, '../certs/ca.pem')) },
+    ssl: { ca: fs.readFileSync(path.join(__dirname, '../../certs/ca.pem')) },
   }),
 });
 
